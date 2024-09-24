@@ -1,0 +1,6 @@
+** BUILD FAILED **
+
+
+The following build commands failed:
+	Ld /Users/zaquielrodriguezarce/Library/Developer/Xcode/DerivedData/PushNotifications2-gjjsjhfgvsdmrebflgpnapnuxfgw/Build/Products/Debug-iphonesimulator/PushNotifications2.app/PushNotifications2 normal (in target 'PushNotifications2' from project 'PushNotifications2')
+(1 failure)
