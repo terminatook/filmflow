@@ -1,10 +1,11 @@
-import { StyleSheet, Text, TouchableOpacity, ScrollView, View, Image, Dimensions } from "react-native";
+import {StyleSheet, Text, TouchableOpacity, ScrollView, View, Image, Dimensions, Button} from "react-native";
 import { usePushNotifications } from "../../usePushNotifications";
-import { useEffect, useState } from "react";
-import { firebaseDB } from "../../firebaseConfig"
+import React, { useEffect, useState } from "react";
+import {clientId, firebaseDB} from "../../firebaseConfig"
 import { collection, getDocs } from "firebase/firestore"; 
 import { MovieInterface } from "../interfaces/MovieInterface";
 import { useNavigation } from "@react-navigation/native";
+import * as Google from 'expo-auth-session/providers/google';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const screenDimensions = Dimensions.get('screen');
@@ -14,6 +15,13 @@ export default function Dashboard() {
   const { expoPushToken, notification } = usePushNotifications();
   const data = JSON.stringify(notification, undefined, 2);
   const [movies, setMovies] = useState<MovieInterface[] | undefined>(undefined);
+
+  const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
+    clientId: clientId,
+  });
+
+  console.log('request: ', request);
+  console.log('response: ', response);
 
 
   const getData = async () => {
@@ -36,6 +44,13 @@ export default function Dashboard() {
 
   return (
     <ScrollView style={styles.wrapper}>
+      <Button
+          disabled={!request}
+          title="Login with Google"
+          onPress={() => {
+            promptAsync();
+          }}
+      />
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.title}>Películas</Text>
